@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card>
+    <h5>Hourglass WebApp Login</h5>
+    <form (ngSubmit)="login()">
+      <mat-form-field>
+        <input matInput
+               placeholder="Redmine URL"
+               required
+               [(ngModel)]="redmineUrl"
+               name="redmineUrl">
+        <mat-hint>e.g. https://redmine.domain.com</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               placeholder="Your api key"
+               required
+               [(ngModel)]="apiKey"
+               name="apiKey">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </form>
+  </mat-card>
+</div>
