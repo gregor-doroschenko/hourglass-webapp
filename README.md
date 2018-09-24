@@ -1,6 +1,6 @@
-# HourglassWebapp
+# Hourglass Webapp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+This is a WebApp for redmine's hourglass extension.
 
 ## Development server
 
