@@ -3,7 +3,9 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector) {}
