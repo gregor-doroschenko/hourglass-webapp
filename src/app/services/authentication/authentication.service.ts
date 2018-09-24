@@ -34,7 +34,7 @@ export class AuthenticationService {
   private getExpirationDate(): number {
     const expirationDate = localStorage.getItem(expirationDateKey);
     if (expirationDate) {
-      return JSON.parse(expirationDateKey);
+      return JSON.parse(expirationDate);
     }
     return null;
   }
