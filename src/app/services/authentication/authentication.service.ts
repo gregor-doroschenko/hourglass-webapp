@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { defaults } from '../../defaults';
+import { UserObject } from '../user/user.interface';
 
 const currentUserAuthTokenKey: string = 'currentUserAuthToken';
 const redmineApiUrlKey: string = 'redmineApiUrl';
@@ -104,8 +105,8 @@ export class AuthenticationService {
       headers = headers.append('X-Redmine-API-Key', this.getAuthToken());
     }
 
-    return this.http.get<any>(url, { headers: headers })
-      .pipe(map(res => {
+    return this.http.get<UserObject>(url, { headers: headers })
+      .pipe(map((res: UserObject) => {
         this.setExpirationDate(rememberMe);
         return res;
       }));
