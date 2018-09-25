@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { defaults } from '../../defaults';
 
 const currentUserAuthTokenKey: string = 'currentUserAuthToken';
@@ -93,16 +94,20 @@ export class AuthenticationService {
     return null;
   }
 
-  login(redmineUrl: string, apiKey: string): Observable<any> {
+  login(redmineUrl: string, apiKey: string, rememberMe: boolean = false): Observable<any> {
     this.setRedmineApiUrl(redmineUrl);
     this.setAuthToken(apiKey);
-    const url = this.getRedmineApiUrl() + this.usersUrl;
+    const url = 'https://cors.bublik.rocks/' + this.getRedmineApiUrl() + this.usersUrl;
     let headers: HttpHeaders = defaults.getDefaultHeaders();
     if (this.getRedmineApiUrl() && this.getAuthToken()) {
       headers = headers.append('X-Redmine-API-Key', this.getAuthToken());
     }
 
-    return this.http.get<any>(url, { headers: headers });
+    return this.http.get<any>(url, { headers: headers })
+      .pipe(map(res => {
+        this.setExpirationDate(rememberMe);
+        return res;
+      }));
   }
 
   logout() {

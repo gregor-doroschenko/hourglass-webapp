@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Component({
@@ -10,19 +11,31 @@ export class LoginComponent implements OnInit {
 
   redmineUrl: string;
   apiKey: string;
+  rememberMe: boolean;
 
-  constructor(private authenticationService: AuthenticationService) { }
+  isLoggedIn: boolean;
+
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router) {
+    this.isLoggedIn = this.authenticationService.isExpirationDateValid();
+  }
 
   ngOnInit() { }
 
   login() {
     if (this.redmineUrl && this.apiKey) {
-      this.authenticationService.login(this.redmineUrl, this.apiKey).subscribe(result => {
-        console.log(result);
+      this.authenticationService.login(this.redmineUrl, this.apiKey, this.rememberMe).subscribe(result => {
+        const redirect = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/';
+        this.router.navigate(['/']);
       }, error => {
         console.log(error);
       });
     }
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.isLoggedIn = false;
   }
 
 }

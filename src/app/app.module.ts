@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatInputModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -27,12 +27,13 @@ import { AuthGuard } from './services/authguard/authguard.service';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    LoginRoutingModule,
     AppRoutingModule,
+    LoginRoutingModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ],
   providers: [
     AuthenticationService,

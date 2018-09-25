@@ -1,23 +1,32 @@
 <div class="container">
   <mat-card>
-    <h5>Hourglass WebApp Login</h5>
-    <form (ngSubmit)="login()">
-      <mat-form-field>
-        <input matInput
-               placeholder="Redmine URL"
-               required
-               [(ngModel)]="redmineUrl"
-               name="redmineUrl">
-        <mat-hint>e.g. https://redmine.domain.com</mat-hint>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput
-               placeholder="Your api key"
-               required
-               [(ngModel)]="apiKey"
-               name="apiKey">
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Login</button>
-    </form>
+    <ng-container *ngIf="!isLoggedIn; else loggedIn;">
+      <h5>Hourglass WebApp Login</h5>
+      <form (ngSubmit)="login()">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Redmine URL"
+                 required
+                 [(ngModel)]="redmineUrl"
+                 name="redmineUrl">
+          <mat-hint>e.g. https://redmine.domain.com</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Your api key"
+                 required
+                 [(ngModel)]="apiKey"
+                 name="apiKey">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="rememberMe" name="remember">Remember me</mat-checkbox>
+        <button mat-raised-button color="primary" type="submit">Login</button>
+      </form>
+    </ng-container>
+    <ng-template #loggedIn>
+      <h5>Your are already logged in!</h5>
+      <button mat-raised-button color="primary"
+              type="button"
+              (click)="logout()">Logout</button>
+    </ng-template>
   </mat-card>
 </div>
