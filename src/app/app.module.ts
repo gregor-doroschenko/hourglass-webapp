@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -13,12 +13,14 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthGuard } from './services/authguard/authguard.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,9 @@ import { AuthGuard } from './services/authguard/authguard.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [
     AuthenticationService,
