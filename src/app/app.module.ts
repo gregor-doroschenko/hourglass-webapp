@@ -14,6 +14,7 @@ import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthGuard } from './services/authguard/authguard.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserService } from './services/user/user.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   providers: [
     AuthenticationService,
-    AuthGuard
+    AuthGuard,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
