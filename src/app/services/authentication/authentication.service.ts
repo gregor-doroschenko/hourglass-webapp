@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import { defaults } from '../../defaults';
 
 const currentUserAuthTokenKey: string = 'currentUserAuthToken';
@@ -97,7 +98,7 @@ export class AuthenticationService {
   login(redmineUrl: string, apiKey: string, rememberMe: boolean = false): Observable<any> {
     this.setRedmineApiUrl(redmineUrl);
     this.setAuthToken(apiKey);
-    const url = 'https://cors.bublik.rocks/' + this.getRedmineApiUrl() + this.usersUrl;
+    const url = environment.corsProxyUrl + this.getRedmineApiUrl() + this.usersUrl;
     let headers: HttpHeaders = defaults.getDefaultHeaders();
     if (this.getRedmineApiUrl() && this.getAuthToken()) {
       headers = headers.append('X-Redmine-API-Key', this.getAuthToken());
