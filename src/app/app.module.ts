@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginRoutingModule } from './login/login-routing.module';
 import { LoginComponent } from './login/login.component';
-import { NavigationComponent } from './navigation/navigation.component';
 import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthGuard } from './services/authguard/authguard.service';
@@ -19,7 +18,6 @@ import { AuthGuard } from './services/authguard/authguard.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    NavigationComponent,
     MainComponent
   ],
   imports: [
