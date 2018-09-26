@@ -60,7 +60,7 @@ export class AuthenticationService {
     localStorage.setItem(redmineApiUrlKey, this.prepareRedmineUrl(redmineUrl));
   }
 
-  private getRedmineApiUrl(): string {
+  getRedmineApiUrl(): string {
     const redmineUrl = localStorage.getItem(redmineApiUrlKey);
     if (redmineUrl) {
       return redmineUrl;
