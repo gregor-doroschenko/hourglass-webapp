@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,7 @@ import { LoginRoutingModule } from './login/login-routing.module';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { AuthInterceptor } from './services/authguard/auth.interceptor';
 import { AuthGuard } from './services/authguard/authguard.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BasedataService } from './services/shared/basedata.service';
@@ -49,9 +50,14 @@ import { TimerControlComponent } from './components/timer/timer-control/timer-co
   providers: [
     AuthenticationService,
     AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     BasedataService,
     UserService,
-    TimerService
+    TimerService,
   ],
   bootstrap: [AppComponent]
 })
