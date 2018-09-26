@@ -15,13 +15,17 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { AuthGuard } from './services/authguard/authguard.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserService } from './services/user/user.service';
+import { TimerComponent } from './components/timer/timer.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    NavbarComponent
+    NavbarComponent,
+    TimerComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
