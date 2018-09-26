@@ -1,4 +1,14 @@
 mat-toolbar-row {
+  .beta {
+    background: #ffffff;
+    border-radius: 3px;
+    color: #000000;
+    font-size: .7rem;
+    padding: 3px;
+    position: relative;
+    top: -10px;
+  }
+
   .spacer {
     flex: 1 1 auto;
   }
