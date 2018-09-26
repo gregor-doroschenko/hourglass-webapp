@@ -14,9 +14,12 @@ import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthGuard } from './services/authguard/authguard.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { BasedataService } from './services/shared/basedata.service';
+import { TimerService } from './services/timer/timer.service';
 import { UserService } from './services/user/user.service';
 import { TimerComponent } from './components/timer/timer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MainComponent,
     NavbarComponent,
     TimerComponent,
-    DashboardComponent
+    DashboardComponent,
+    TimerControlComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   providers: [
     AuthenticationService,
     AuthGuard,
-    UserService
+    BasedataService,
+    UserService,
+    TimerService
   ],
   bootstrap: [AppComponent]
 })
