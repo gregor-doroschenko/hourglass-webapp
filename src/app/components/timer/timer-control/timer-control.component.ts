@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TimeTracker } from '../../../services/timer/timer.interface';
 import { TimerService } from '../../../services/timer/timer.service';
 
 @Component({
@@ -8,33 +9,22 @@ import { TimerService } from '../../../services/timer/timer.service';
 })
 export class TimerControlComponent implements OnInit {
 
+  timeTracker: Partial<TimeTracker> = {};
+  isLoading: boolean;
+
   constructor(private timerService: TimerService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  startTest() {
-    this.timerService.startTimeTracker('Das ist Test').subscribe(res => {
-      console.log(res);
-      console.log('started');
+  startTimer() {
+    this.isLoading = true;
+    this.timerService.startTimeTracker(this.timeTracker).subscribe(result => {
+      console.log(result);
+      this.timeTracker = result;
+      this.isLoading = false;
     }, error => {
       console.log('error');
-    });
-  }
-
-  getTest() {
-    this.timerService.getTimeTrackers().subscribe(res => {
-      console.log(res);
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  getTimeLogs() {
-    this.timerService.getTimeLogs().subscribe(res => {
-      console.log(res);
-    }, error => {
-      console.log(error);
+      this.isLoading = false;
     });
   }
 

@@ -1,14 +1,23 @@
 <mat-card>
-  <p>
-    timer-control works!
-  </p>
-  <button mat-raised-button="primary"
-          type="button"
-          (click)="startTest()">Start Test Timer</button>
-  <button mat-raised-button="primary"
-          type="button"
-          (click)="getTest()">Get Timer</button>
-  <button mat-raised-button="primary"
-          type="button"
-          (click)="getTimeLogs()">Get Timer Logs</button>
+  <form>
+    <mat-form-field>
+      <input matInput
+             placeholder="Task description"
+             [(ngModel)]="timeTracker.comments"
+             name="comments">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             type="time"
+             name="current-time">
+    </mat-form-field>
+    <div>
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="isLoading"
+              (click)="startTimer()">Start</button>
+    </div>
+  </form>
+  <p *ngIf="isLoading">Lädt...</p>
 </mat-card>
