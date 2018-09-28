@@ -31,6 +31,11 @@ export class TimerService extends BasedataService {
     return this.http.post<TimeTracker>(endpoint, JSON.stringify(body));
   }
 
+  stopTimeTracker(timerId: number): Observable<any> {
+    const endpoint = this.getFullEndpointUrl(this.timeTrackersUrl + '/' + timerId + '/stop');
+    return this.http.delete<any>(endpoint);
+  }
+
   getTimeTrackers(): Observable<any> {
     const endpoint = this.getFullEndpointUrl(this.timeTrackersUrl);
     return this.http.get(endpoint);
