@@ -12,11 +12,18 @@
              name="current-time">
     </mat-form-field>
     <div>
-      <button mat-raised-button
+      <button *ngIf="!isRunning"
+              mat-raised-button
               color="primary"
               type="submit"
               [disabled]="isLoading"
-              (click)="startTimer()">Start</button>
+              (click)="start()">Start</button>
+      <button *ngIf="isRunning"
+              mat-raised-button
+              color="warn"
+              type="submit"
+              [disabled]="isLoading"
+              (click)="stop()">Stop</button>
     </div>
   </form>
   <p *ngIf="isLoading">Lädt...</p>
