@@ -1,1 +1,5 @@
-<app-timer-control></app-timer-control>
+<app-timer-control [timeTracker]="currentTimeTracker"
+                   [isLoading]="isLoading"
+                   [isRunning]="isRunning"
+                   (startTimerEvent)="startTimer($event)"
+                   (stopTimerEvent)="stopTimer($event)"></app-timer-control>
