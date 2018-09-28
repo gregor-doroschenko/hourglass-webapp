@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BasedataService } from '../shared/basedata.service';
+import { TimeTracker, TimeTrackerObject } from './timer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,12 @@ export class TimerService extends BasedataService {
     return super.getFullUrl(path + '.json');
   }
 
-  startTimeTracker(message: string): Observable<any> {
+  startTimeTracker(timeTracker: Partial<TimeTracker>): Observable<TimeTracker> {
     const endpoint = this.getFullEndpointUrl(this.startTimeTrackerUrl);
-    const body = {
-      comments: message
+    const body: TimeTrackerObject = {
+      time_tracker: timeTracker
     };
-    return this.http.post<any>(endpoint, JSON.stringify(body));
+    return this.http.post<TimeTracker>(endpoint, JSON.stringify(body));
   }
 
   getTimeTrackers(): Observable<any> {
