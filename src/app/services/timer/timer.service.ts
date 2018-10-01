@@ -41,8 +41,8 @@ export class TimerService extends BasedataService {
     return this.http.get<TimeTrackers>(endpoint);
   }
 
-  getTimeLogs(): Observable<any> {
+  getTimeLogs(): Observable<TimeTrackers> {
     const endpoint = this.getFullEndpointUrl(this.timeLogsUrl);
-    return this.http.get<any>(endpoint);
+    return this.http.get<TimeTrackers>(endpoint);
   }
 }
