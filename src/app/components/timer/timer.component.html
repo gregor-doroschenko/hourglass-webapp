@@ -6,9 +6,7 @@
 
 <section>
   <div>
-    <pre>
-      {{ timeLogs | json }}
-    </pre>
+    <app-time-logs [timeLogs]="timeLogs.records"></app-time-logs>
   </div>
   <div>
     <pre>

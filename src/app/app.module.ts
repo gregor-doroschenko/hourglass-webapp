@@ -21,6 +21,7 @@ import { UserService } from './services/user/user.service';
 import { TimerComponent } from './components/timer/timer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
+import { TimeLogsComponent } from './components/timer/time-logs/time-logs.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TimerControlComponent } from './components/timer/timer-control/timer-co
     NavbarComponent,
     TimerComponent,
     DashboardComponent,
-    TimerControlComponent
+    TimerControlComponent,
+    TimeLogsComponent
   ],
   imports: [
     BrowserModule,
