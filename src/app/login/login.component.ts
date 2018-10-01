@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     if (this.redmineUrl && this.apiKey) {
       this.authenticationService.login(this.redmineUrl, this.apiKey, this.rememberMe).subscribe(result => {
         this.userService.setUserName(result.user.firstname, result.user.lastname);
+        this.userService.setUserId(result.user.id);
         const redirect = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/';
         this.router.navigate(['/']);
       }, error => {

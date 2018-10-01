@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const usernameKey: string = 'username';
+const useridKey: string = 'userid';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,22 @@ export class UserService {
     const username = localStorage.getItem(usernameKey);
     if (username) {
       return username;
+    }
+    return null;
+  }
+
+  setUserId(id: number) {
+    const userid = localStorage.getItem(useridKey);
+    if (userid) {
+      localStorage.removeItem(useridKey);
+    }
+    localStorage.setItem(useridKey, JSON.stringify(id));
+  }
+
+  getUserId(): number {
+    const userid = localStorage.getItem(useridKey);
+    if (userid) {
+      return JSON.parse(userid);
     }
     return null;
   }
