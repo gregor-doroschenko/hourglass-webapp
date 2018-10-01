@@ -20,7 +20,6 @@ export class TimerComponent implements OnInit {
   startTimer(timeTracker: Partial<TimeTracker>) {
     this.isLoading = true;
     this.timerService.startTimeTracker(timeTracker).subscribe(result => {
-      console.log(result);
       this.currentTimeTracker = result;
       this.isRunning = true;
       this.isLoading = false;
@@ -35,7 +34,6 @@ export class TimerComponent implements OnInit {
     this.timerService.stopTimeTracker(timerId).subscribe(result => {
       this.isRunning = false;
       this.isLoading = false;
-      console.log(result);
     }, error => {
       this.isLoading = false;
       console.log(error);
