@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BasedataService } from '../shared/basedata.service';
-import { TimeTracker, TimeTrackerObject, TimeTrackers } from './timer.interface';
+import { TimeBookings, TimeTracker, TimeTrackerObject, TimeTrackers } from './timer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class TimerService extends BasedataService {
   private timeTrackersUrl: string = '/hourglass/time_trackers';
   private startTimeTrackerUrl: string = '/hourglass/time_trackers/start';
   private timeLogsUrl: string = '/hourglass/time_logs';
+  private timeBookingsUrl: string = '/hourglass/time_bookings';
 
   constructor(protected authenticationService: AuthenticationService,
               private http: HttpClient) {
@@ -44,5 +45,10 @@ export class TimerService extends BasedataService {
   getTimeLogs(): Observable<TimeTrackers> {
     const endpoint = this.getFullEndpointUrl(this.timeLogsUrl);
     return this.http.get<TimeTrackers>(endpoint);
+  }
+
+  getTimeBookings(): Observable<TimeBookings> {
+    const endpoint = this.getFullEndpointUrl(this.timeBookingsUrl);
+    return this.http.get<TimeBookings>(endpoint);
   }
 }
