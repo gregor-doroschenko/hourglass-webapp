@@ -18,6 +18,8 @@ export class TimerComponent implements OnInit {
 
   timeLogs: TimeTrackers;
   timeBookings: TimeBookings;
+  isTimeLogsLoading: boolean;
+  isTimeBookingsLoading: boolean;
 
   constructor(private timerService: TimerService,
               private userService: UserService) { }
@@ -68,18 +70,24 @@ export class TimerComponent implements OnInit {
   }
 
   getTimeLogs() {
+    this.isTimeLogsLoading = true;
     this.timerService.getTimeLogs().subscribe(timeLogs => {
       this.timeLogs = timeLogs;
+      this.isTimeLogsLoading = false;
     }, error => {
       console.log(error);
+      this.isTimeLogsLoading = false;
     });
   }
 
   getTimeBookings() {
+    this.isTimeBookingsLoading = true;
     this.timerService.getTimeBookings().subscribe(timeBookings => {
       this.timeBookings = timeBookings;
+      this.isTimeBookingsLoading = false;
     }, error => {
       console.log(error);
+      this.isTimeBookingsLoading = false;
     });
   }
 

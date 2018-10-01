@@ -14,6 +14,7 @@ export interface TimeTracker {
   issue_id: number;
   comments: string;
   hours: number;
+  diff_time: number;
 }
 
 export interface TimeTrackers {

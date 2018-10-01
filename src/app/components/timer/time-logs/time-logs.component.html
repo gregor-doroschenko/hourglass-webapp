@@ -1,12 +1,20 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <strong>Time Logs</strong>
+      <strong>Recently tracked tasks</strong>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <pre>
-      {{ timeLogs | json }}
-    </pre>
+    <ng-container *ngFor="let timeLog of timeLogs">
+      <mat-list-item>
+        <div class="time-log-details">
+          <p>{{ timeLog.comments }}</p>
+          <p>{{ timeLog.created_at | date:'dd.MM.yyyy' }}</p>
+          <p>{{ timeLog.start | date:'HH:mm:ss' }} - {{ timeLog.stop | date:'HH:mm:ss' }}</p>
+          <p>{{ timeLog.diff_time | date:'HH:mm:ss' }}</p>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
   </mat-card-content>
 </mat-card>

@@ -5,12 +5,6 @@
                    (stopTimerEvent)="stopTimer($event)"></app-timer-control>
 
 <section>
-  <div>
-    <app-time-logs [timeLogs]="timeLogs.records"></app-time-logs>
-  </div>
-  <div>
-    <pre>
-      {{ timeBookings | json }}
-    </pre>
-  </div>
+  <app-time-logs *ngIf="!isTimeLogsLoading"
+                 [timeLogs]="timeLogs.records"></app-time-logs>
 </section>
