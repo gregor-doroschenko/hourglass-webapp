@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { interval, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TimeTracker } from '../../../services/timer/timer.interface';
 
 @Component({
@@ -15,9 +17,30 @@ export class TimerControlComponent implements OnInit {
   @Output() startTimerEvent: EventEmitter<Partial<TimeTracker>> = new EventEmitter<Partial<TimeTracker>>();
   @Output() stopTimerEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  currentTime$: Observable<number>;
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.currentTime$ = interval(1000).pipe(
+      map((x) => {
+        if (this.isRunning) {
+          return this.getTimeDifference(this.timeTracker.created_at);
+        }
+      })
+    );
+  }
+
+  getTimeDifference(startTime: string): number {
+    const start = new Date(startTime).getTime();
+    const now = Date.now();
+    const diff = now - start;
+    const result = new Date(diff);
+    result.setHours(result.getUTCHours());
+    result.setMinutes(result.getUTCMinutes());
+    result.setSeconds(result.getSeconds());
+    return result.getTime();
+  }
 
   start() {
     this.startTimerEvent.emit(this.timeTracker);
@@ -25,6 +48,7 @@ export class TimerControlComponent implements OnInit {
 
   stop() {
     this.stopTimerEvent.emit(this.timeTracker.id);
+    this.timeTracker = {};
   }
 
 }

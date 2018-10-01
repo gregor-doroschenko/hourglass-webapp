@@ -6,11 +6,11 @@
              [(ngModel)]="timeTracker.comments"
              name="comments">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput
-             type="time"
-             name="current-time">
-    </mat-form-field>
+    <div class="current-time">
+      <span>
+        {{ currentTime$ | async | date:'HH:mm:ss' }}
+      </span>
+    </div>
     <div>
       <button *ngIf="!isRunning"
               mat-raised-button
