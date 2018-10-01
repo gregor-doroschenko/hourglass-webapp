@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeTracker } from '../../services/timer/timer.interface';
 import { TimerService } from '../../services/timer/timer.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-timer',
@@ -13,9 +14,15 @@ export class TimerComponent implements OnInit {
   isLoading: boolean;
   isRunning: boolean;
 
-  constructor(private timerService: TimerService) { }
+  userId: number;
 
-  ngOnInit() { }
+  constructor(private timerService: TimerService,
+              private userService: UserService) { }
+
+  ngOnInit() {
+    this.userId = this.userService.getUserId();
+    this.getCurrentTimer();
+  }
 
   startTimer(timeTracker: Partial<TimeTracker>) {
     this.isLoading = true;
@@ -36,6 +43,21 @@ export class TimerComponent implements OnInit {
       this.isLoading = false;
     }, error => {
       this.isLoading = false;
+      console.log(error);
+    });
+  }
+
+  getCurrentTimer() {
+    this.timerService.getCurrentTimeTrackers().subscribe(currentTimeTrackers => {
+      if (currentTimeTrackers.count !== 0) {
+        const records = currentTimeTrackers.records;
+        const currentUserRecord = records.find(record => record.user_id === this.userId);
+        if (currentUserRecord) {
+          this.currentTimeTracker = currentUserRecord;
+          this.isRunning = true;
+        }
+      }
+    }, error => {
       console.log(error);
     });
   }

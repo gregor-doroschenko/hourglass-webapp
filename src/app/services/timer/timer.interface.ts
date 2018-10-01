@@ -14,3 +14,10 @@ export interface TimeTracker {
   issue_id: number;
   comments: string;
 }
+
+export interface TimeTrackers {
+  count: number;
+  offset: number;
+  limit: number;
+  records: TimeTracker[];
+}

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BasedataService } from '../shared/basedata.service';
-import { TimeTracker, TimeTrackerObject } from './timer.interface';
+import { TimeTracker, TimeTrackerObject, TimeTrackers } from './timer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +31,14 @@ export class TimerService extends BasedataService {
     return this.http.post<TimeTracker>(endpoint, JSON.stringify(body));
   }
 
-  stopTimeTracker(timerId: number): Observable<any> {
+  stopTimeTracker(timerId: number): Observable<TimeTracker> {
     const endpoint = this.getFullEndpointUrl(this.timeTrackersUrl + '/' + timerId + '/stop');
-    return this.http.delete<any>(endpoint);
+    return this.http.delete<TimeTracker>(endpoint);
   }
 
-  getTimeTrackers(): Observable<any> {
+  getCurrentTimeTrackers(): Observable<TimeTrackers> {
     const endpoint = this.getFullEndpointUrl(this.timeTrackersUrl);
-    return this.http.get(endpoint);
+    return this.http.get<TimeTrackers>(endpoint);
   }
 
   getTimeLogs(): Observable<any> {
