@@ -1,30 +1,37 @@
 <mat-card>
-  <form>
-    <mat-form-field>
-      <input matInput
-             placeholder="Task description"
-             [(ngModel)]="timeTracker.comments"
-             name="comments">
-    </mat-form-field>
-    <div class="current-time">
+  <mat-card-header>
+    <mat-card-title>
+      <strong>Track your current task</strong>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input matInput
+               [disabled]="isLoading"
+               placeholder="Task description"
+               [(ngModel)]="timeTracker.comments"
+               name="comments">
+      </mat-form-field>
+      <div class="current-time">
       <span>
         {{ currentTime$ | async | date:'HH:mm:ss' }}
       </span>
-    </div>
-    <div>
-      <button *ngIf="!isRunning"
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="isLoading"
-              (click)="start()">Start</button>
-      <button *ngIf="isRunning"
-              mat-raised-button
-              color="warn"
-              type="submit"
-              [disabled]="isLoading"
-              (click)="stop()">Stop</button>
-    </div>
-  </form>
-  <p *ngIf="isLoading">Lädt...</p>
+      </div>
+      <div>
+        <button *ngIf="!isRunning"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="isLoading"
+                (click)="start()">Start</button>
+        <button *ngIf="isRunning"
+                mat-raised-button
+                color="warn"
+                type="submit"
+                [disabled]="isLoading"
+                (click)="stop()">Stop</button>
+      </div>
+    </form>
+  </mat-card-content>
 </mat-card>

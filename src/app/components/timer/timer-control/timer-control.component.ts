@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TimeTracker } from '../../../services/timer/timer.interface';
@@ -6,7 +6,8 @@ import { TimeTracker } from '../../../services/timer/timer.interface';
 @Component({
   selector: 'app-timer-control',
   templateUrl: './timer-control.component.html',
-  styleUrls: ['./timer-control.component.scss']
+  styleUrls: ['./timer-control.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TimerControlComponent implements OnInit {
 
