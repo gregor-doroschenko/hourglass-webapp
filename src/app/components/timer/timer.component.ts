@@ -48,6 +48,7 @@ export class TimerComponent implements OnInit {
     this.timerService.stopTimeTracker(timerId).subscribe(result => {
       this.isRunning = false;
       this.isLoading = false;
+      this.getTimeLogs();
     }, error => {
       this.isLoading = false;
       console.log(error);
