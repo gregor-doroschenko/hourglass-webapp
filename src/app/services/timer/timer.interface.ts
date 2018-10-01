@@ -8,6 +8,7 @@ export interface TimeTracker {
   updated_at: string;
   user_id: number;
   start: string;
+  stop: string;
   project_id: number;
   activity_id: number;
   issue_id: number;
