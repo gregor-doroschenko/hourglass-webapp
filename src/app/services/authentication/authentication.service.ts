@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { defaults } from '../../defaults';
 import { UserObject } from '../user/user.interface';
 
 const currentUserAuthTokenKey: string = 'currentUserAuthToken';
@@ -100,12 +99,8 @@ export class AuthenticationService {
     this.setRedmineApiUrl(redmineUrl);
     this.setAuthToken(apiKey);
     const url = environment.corsProxyUrl + this.getRedmineApiUrl() + this.usersUrl;
-    let headers: HttpHeaders = defaults.getDefaultHeaders();
-    if (this.getRedmineApiUrl() && this.getAuthToken()) {
-      headers = headers.append('X-Redmine-API-Key', this.getAuthToken());
-    }
 
-    return this.http.get<UserObject>(url, { headers: headers })
+    return this.http.get<UserObject>(url)
       .pipe(map((res: UserObject) => {
         this.setExpirationDate(rememberMe);
         return res;
