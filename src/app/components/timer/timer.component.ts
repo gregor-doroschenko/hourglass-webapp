@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimeTracker } from '../../services/timer/timer.interface';
+import { TimeBookings, TimeTracker, TimeTrackers } from '../../services/timer/timer.interface';
 import { TimerService } from '../../services/timer/timer.service';
 import { UserService } from '../../services/user/user.service';
 
@@ -16,12 +16,17 @@ export class TimerComponent implements OnInit {
 
   userId: number;
 
+  timeLogs: TimeTrackers;
+  timeBookings: TimeBookings;
+
   constructor(private timerService: TimerService,
               private userService: UserService) { }
 
   ngOnInit() {
     this.userId = this.userService.getUserId();
     this.getCurrentTimer();
+    this.getTimeLogs();
+    this.getTimeBookings();
   }
 
   startTimer(timeTracker: Partial<TimeTracker>) {
@@ -57,6 +62,22 @@ export class TimerComponent implements OnInit {
           this.isRunning = true;
         }
       }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getTimeLogs() {
+    this.timerService.getTimeLogs().subscribe(timeLogs => {
+      this.timeLogs = timeLogs;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getTimeBookings() {
+    this.timerService.getTimeBookings().subscribe(timeBookings => {
+      this.timeBookings = timeBookings;
     }, error => {
       console.log(error);
     });

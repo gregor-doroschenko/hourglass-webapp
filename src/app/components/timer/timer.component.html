@@ -3,3 +3,16 @@
                    [isRunning]="isRunning"
                    (startTimerEvent)="startTimer($event)"
                    (stopTimerEvent)="stopTimer($event)"></app-timer-control>
+
+<section>
+  <div>
+    <pre>
+      {{ timeLogs | json }}
+    </pre>
+  </div>
+  <div>
+    <pre>
+      {{ timeBookings | json }}
+    </pre>
+  </div>
+</section>
