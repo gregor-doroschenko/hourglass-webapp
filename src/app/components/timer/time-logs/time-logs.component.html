@@ -11,7 +11,7 @@
 <mat-card *ngFor="let group of groupedTimeLogs;">
   <mat-card-header>
     <mat-card-title>
-      <strong>{{ group.int_date | date:'dd.MM.yyyy' }}</strong>
+      <strong>{{ group.int_date | date:'E, dd.MM.yyyy' }}</strong>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
