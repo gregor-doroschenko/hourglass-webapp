@@ -13,6 +13,13 @@
                [(ngModel)]="timeTracker.comments"
                name="comments">
       </mat-form-field>
+      <mat-form-field>
+          <mat-select placeholder="Select project" [(value)]="timeTracker.project_id">
+            <mat-option *ngFor="let proj of projects" [value]="proj.id">
+              <span class="outline-text" [style.color]="proj?.color">{{proj.name}}</span>
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
       <div class="current-time">
       <span>
         {{ currentTime$ | async | date:'HH:mm:ss' }}

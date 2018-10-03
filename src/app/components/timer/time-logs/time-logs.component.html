@@ -9,6 +9,7 @@
       <mat-list-item>
         <div class="time-log-details">
           <p>{{ timeLog.comments }}</p>
+          <p class="outline-text" [style.color]="timeLog?.project?.color"> {{timeLog?.project?.name}}</p>
           <p>{{ timeLog.created_at | date:'dd.MM.yyyy' }}</p>
           <p>{{ timeLog.start | date:'HH:mm:ss' }} - {{ timeLog.stop | date:'HH:mm:ss' }}</p>
           <p>{{ timeLog.diff_time | date:'HH:mm:ss' }}</p>

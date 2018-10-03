@@ -1,4 +1,5 @@
 <app-timer-control [timeTracker]="currentTimeTracker"
+                  [projects]="projects?.projects"
                    [isLoading]="isLoading"
                    [isRunning]="isRunning"
                    (startTimerEvent)="startTimer($event)"
@@ -6,5 +7,8 @@
 
 <section>
   <app-time-logs *ngIf="!isTimeLogsLoading"
-                 [timeLogs]="timeLogs.records"></app-time-logs>
+                 [timeLogs]="timeLogs?.records"
+                 [timeBookings]="timeBookings?.records"
+                 [projects]="projects?.projects">
+  </app-time-logs>
 </section>

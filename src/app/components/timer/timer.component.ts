@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TimeBookings, TimeTracker, TimeTrackers } from '../../services/timer/timer.interface';
 import { TimerService } from '../../services/timer/timer.service';
 import { UserService } from '../../services/user/user.service';
+import { RedmineService } from '../../services/redmine/redmine.service';
+import { Projects } from '../../services/redmine/redmine.interface';
 
 @Component({
   selector: 'app-timer',
@@ -18,10 +20,13 @@ export class TimerComponent implements OnInit {
 
   timeLogs: TimeTrackers;
   timeBookings: TimeBookings;
+  projects: Projects;
   isTimeLogsLoading: boolean;
   isTimeBookingsLoading: boolean;
+  isProjectsLoading: boolean;
 
   constructor(private timerService: TimerService,
+              private redmineService: RedmineService,
               private userService: UserService) { }
 
   ngOnInit() {
@@ -29,6 +34,7 @@ export class TimerComponent implements OnInit {
     this.getCurrentTimer();
     this.getTimeLogs();
     this.getTimeBookings();
+    this.getProjects();
   }
 
   startTimer(timeTracker: Partial<TimeTracker>) {
@@ -90,6 +96,30 @@ export class TimerComponent implements OnInit {
       console.log(error);
       this.isTimeBookingsLoading = false;
     });
+  }
+
+  getProjects() {
+    this.isProjectsLoading = true;
+    this.redmineService.getProjects().subscribe(projects => {
+      this.projects = projects;
+      this.isProjectsLoading = false;
+      this.projects.projects.forEach(x => x.color = this.getRandomColor(x.name));
+    }, error => {
+      console.log(error);
+      this.isProjectsLoading = false;
+    });
+  }
+
+  private getRandomColor (projectName: string) {
+    projectName = projectName.replace(/[^a-f0-9]/gi, '');
+    projectName = projectName.padStart(6, '999').slice(-6);
+    return '#' + projectName.toUpperCase();
+   /*  const letters = '456789ABC';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 9)];
+    }
+    return color; */
   }
 
 }

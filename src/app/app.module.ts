@@ -7,7 +7,10 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSelect,
+  MatSelectModule,
+  MatOptionModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,6 +33,7 @@ import { TimerComponent } from './components/timer/timer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
 import { TimeLogsComponent } from './components/timer/time-logs/time-logs.component';
+import { RedmineService } from './services/redmine/redmine.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,9 @@ import { TimeLogsComponent } from './components/timer/time-logs/time-logs.compon
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   providers: [
     AuthenticationService,
@@ -70,6 +76,7 @@ import { TimeLogsComponent } from './components/timer/time-logs/time-logs.compon
     BasedataService,
     UserService,
     TimerService,
+    RedmineService
   ],
   bootstrap: [AppComponent]
 })

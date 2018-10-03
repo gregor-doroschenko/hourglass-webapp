@@ -1,3 +1,5 @@
+import { Project } from '../redmine/redmine.interface';
+
 export interface TimeTrackerObject {
   time_tracker: Partial<TimeTracker>;
 }
@@ -15,6 +17,8 @@ export interface TimeTracker {
   comments: string;
   hours: number;
   diff_time: number;
+
+  project: Project;
 }
 
 export interface TimeTrackers {

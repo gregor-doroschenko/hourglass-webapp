@@ -4,3 +4,8 @@
 body {
   margin: 0;
 }
+
+.outline-text {
+  -webkit-text-stroke-width: .3px;
+   -webkit-text-stroke-color: black;
+}

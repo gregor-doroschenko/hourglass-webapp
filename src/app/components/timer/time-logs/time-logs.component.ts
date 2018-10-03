@@ -1,14 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TimeTracker } from '../../../services/timer/timer.interface';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { TimeTracker, TimeBookings, TimeBooking } from '../../../services/timer/timer.interface';
+import { Projects, Project } from '../../../services/redmine/redmine.interface';
 
 @Component({
   selector: 'app-time-logs',
   templateUrl: './time-logs.component.html',
   styleUrls: ['./time-logs.component.scss']
 })
-export class TimeLogsComponent implements OnInit {
+export class TimeLogsComponent implements OnInit, OnChanges {
 
   @Input() timeLogs: TimeTracker[];
+  @Input() timeBookings: TimeBooking[];
+  @Input() projects: Project[];
 
   groupedTimeLogs: any;
 
@@ -20,6 +23,10 @@ export class TimeLogsComponent implements OnInit {
       timeLog.diff_time = this.getTimeDifference(timeLog.start, timeLog.stop);
       return timeLog;
     });
+  }
+
+  ngOnChanges() {
+    this.assignProject();
   }
 
   sortByDate() {
@@ -37,6 +44,17 @@ export class TimeLogsComponent implements OnInit {
     result.setMinutes(result.getUTCMinutes());
     result.setSeconds(result.getSeconds());
     return result.getTime();
+  }
+
+  assignProject() {
+    if (this.timeBookings && this.projects) {
+      for (const item of this.timeLogs) {
+        const booking = this.timeBookings.find(x => x.time_log_id === item.id);
+        if (booking) {
+          item.project = this.projects.find(x => x.id === booking.time_entry.project_id);
+        }
+      }
+    }
   }
 
 }

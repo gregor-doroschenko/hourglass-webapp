@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { interval, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TimeTracker } from '../../../services/timer/timer.interface';
+import { Projects, Project } from '../../../services/redmine/redmine.interface';
 
 @Component({
   selector: 'app-timer-control',
@@ -12,6 +13,7 @@ import { TimeTracker } from '../../../services/timer/timer.interface';
 export class TimerControlComponent implements OnInit {
 
   @Input() timeTracker: Partial<TimeTracker> = {};
+  @Input() projects: Project[];
   @Input() isLoading: boolean;
   @Input() isRunning: boolean;
 
