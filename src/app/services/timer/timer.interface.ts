@@ -57,3 +57,8 @@ export interface TimeEntry {
   created_on: string;
   updated_on: string;
 }
+
+export interface GroupedTimeLogs {
+  int_date: number;
+  time_logs: TimeTracker[];
+}
