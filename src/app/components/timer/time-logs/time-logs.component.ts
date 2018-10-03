@@ -14,11 +14,14 @@ export class TimeLogsComponent implements OnInit {
 
   @Output() deleteTimeLogEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  today: number;
   groupedTimeLogs: GroupedTimeLogs[] = [];
 
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+    const today = new Date(Date.now()).setHours(0, 0, 0, 0);
+    this.today = new Date(today).getTime();
     this.sortByDate();
     this.timeLogs.map(timeLog => {
       timeLog.diff_time = this.getTimeDifference(timeLog.start, timeLog.stop);
@@ -33,7 +36,8 @@ export class TimeLogsComponent implements OnInit {
     let twoWeeksCount = 14;
     const allDays: number[] = [];
     while (twoWeeksCount >= 0) {
-      const date = new Date(now).setDate(-twoWeeksCount + currentDate);
+      let date = new Date(now).setDate(-twoWeeksCount + currentDate);
+      date = new Date(date).setHours(0, 0, 0, 0);
       allDays.push(new Date(date).getTime());
       twoWeeksCount--;
     }
@@ -49,8 +53,7 @@ export class TimeLogsComponent implements OnInit {
       };
       const timeLogs = this.timeLogs.filter(timelog => {
         const timelogDate = new Date(timelog.created_at).setHours(0, 0, 0, 0);
-        const dayDate = new Date(day).setHours(0, 0, 0, 0);
-        if (new Date(timelogDate).getTime() === new Date(dayDate).getTime()) {
+        if (new Date(timelogDate).getTime() === new Date(day).getTime()) {
           return timelog;
         }
       });
