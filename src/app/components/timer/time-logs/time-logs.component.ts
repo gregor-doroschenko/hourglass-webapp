@@ -46,7 +46,7 @@ export class TimeLogsComponent implements OnInit {
 
   groupTimeLogsByDate() {
     const lastTwoWeeksDays = this.getDaysForLastTwoWeeks();
-    lastTwoWeeksDays.forEach(day => {
+    lastTwoWeeksDays.forEach((day, index) => {
       const group: GroupedTimeLogs = {
         int_date: day,
         time_logs: []
@@ -60,7 +60,7 @@ export class TimeLogsComponent implements OnInit {
       if (timeLogs.length !== 0) {
         group.time_logs = timeLogs;
       }
-      this.groupedTimeLogs.push(group);
+      this.groupedTimeLogs[index] = group;
     });
   }
 
