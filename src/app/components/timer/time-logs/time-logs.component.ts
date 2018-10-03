@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { TimeTracker } from '../../../services/timer/timer.interface';
+import { TimelogDeleteDialogComponent } from './timelog-delete-dialog/timelog-delete-dialog.component';
 
 @Component({
   selector: 'app-time-logs',
@@ -10,9 +12,10 @@ export class TimeLogsComponent implements OnInit {
 
   @Input() timeLogs: TimeTracker[];
 
+  @Output() deleteTimeLogEvent: EventEmitter<number> = new EventEmitter<number>();
   groupedTimeLogs: any;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     this.sortByDate();
@@ -37,6 +40,25 @@ export class TimeLogsComponent implements OnInit {
     result.setMinutes(result.getUTCMinutes());
     result.setSeconds(result.getSeconds());
     return result.getTime();
+  }
+
+  openDeleteDialog(timeLogId: number) {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(TimelogDeleteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.deleteTimeLogEvent.emit(timeLogId);
+        this.deleteTimeLogFromList(timeLogId);
+      }
+    });
+  }
+
+  deleteTimeLogFromList(timeLogId: number) {
+    const timelogIndex = this.timeLogs.findIndex(timelog => timelog.id === timeLogId);
+    if (timelogIndex !== -1) {
+      this.timeLogs.splice(timelogIndex, 1);
+    }
   }
 
 }

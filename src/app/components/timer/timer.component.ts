@@ -92,4 +92,12 @@ export class TimerComponent implements OnInit {
     });
   }
 
+  getTimlogDeleteEvent(timeLogId: number) {
+    this.timerService.deleteTimeLog(timeLogId).subscribe(result => {
+      console.log('time entry deleted');
+    }, error => {
+      console.log(error);
+    });
+  }
+
 }

@@ -47,6 +47,11 @@ export class TimerService extends BasedataService {
     return this.http.get<TimeTrackers>(endpoint);
   }
 
+  deleteTimeLog(timeLogId: number): Observable<any> {
+    const endpoint = this.getFullEndpointUrl(this.timeLogsUrl + '/' + timeLogId);
+    return this.http.delete<any>(endpoint);
+  }
+
   getTimeBookings(): Observable<TimeBookings> {
     const endpoint = this.getFullEndpointUrl(this.timeBookingsUrl);
     return this.http.get<TimeBookings>(endpoint);

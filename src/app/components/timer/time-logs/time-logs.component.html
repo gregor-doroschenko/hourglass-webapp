@@ -12,6 +12,10 @@
           <p>{{ timeLog.created_at | date:'dd.MM.yyyy' }}</p>
           <p>{{ timeLog.start | date:'HH:mm:ss' }} - {{ timeLog.stop | date:'HH:mm:ss' }}</p>
           <p>{{ timeLog.diff_time | date:'HH:mm:ss' }}</p>
+          <button mat-icon-button
+                  (click)="openDeleteDialog(timeLog.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
         </div>
       </mat-list-item>
       <mat-divider></mat-divider>

@@ -6,5 +6,6 @@
 
 <section>
   <app-time-logs *ngIf="!isTimeLogsLoading"
-                 [timeLogs]="timeLogs.records"></app-time-logs>
+                 [timeLogs]="timeLogs.records"
+                 (deleteTimeLogEvent)="getTimlogDeleteEvent($event)"></app-time-logs>
 </section>

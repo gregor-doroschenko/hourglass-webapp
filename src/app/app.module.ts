@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule, MatDividerModule,
+  MatCheckboxModule, MatDialogModule, MatDividerModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -30,6 +30,7 @@ import { TimerComponent } from './components/timer/timer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
 import { TimeLogsComponent } from './components/timer/time-logs/time-logs.component';
+import { TimelogDeleteDialogComponent } from './components/timer/time-logs/timelog-delete-dialog/timelog-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { TimeLogsComponent } from './components/timer/time-logs/time-logs.compon
     TimerComponent,
     DashboardComponent,
     TimerControlComponent,
-    TimeLogsComponent
+    TimeLogsComponent,
+    TimelogDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { TimeLogsComponent } from './components/timer/time-logs/time-logs.compon
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [
     AuthenticationService,
@@ -71,6 +74,9 @@ import { TimeLogsComponent } from './components/timer/time-logs/time-logs.compon
     UserService,
     TimerService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    TimelogDeleteDialogComponent
+  ]
 })
 export class AppModule { }
