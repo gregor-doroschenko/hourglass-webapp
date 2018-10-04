@@ -4,3 +4,19 @@ section {
   grid-column-gap: 2rem;
   margin-top: 2rem;
 }
+
+.mat-card-title {
+  margin-bottom: 5px
+}
+
+.mat-slide-toggle {
+  right: 15px;
+  bottom: 10px;
+  position: absolute;
+}
+
+.mat-spinner {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}

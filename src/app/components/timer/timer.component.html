@@ -1,11 +1,37 @@
-<app-timer-control [timeTracker]="currentTimeTracker"
+<mat-card style="padding: 10px 24px">
+    <mat-card-header>
+      <mat-card-title>
+        <strong>Track your current task</strong>
+        <mat-slide-toggle
+            [disabled]="isRunning"
+            (change)="isAutomaticMode = !isAutomaticMode"
+            [checked]="isAutomaticMode">Automatic mode</mat-slide-toggle>
+      </mat-card-title>
+    </mat-card-header>
+</mat-card>
+
+<app-timer-control *ngIf="isAutomaticMode"
+                  [timeTracker]="currentTimeTracker"
+                   [projects]="projects?.projects"
                    [isLoading]="isLoading"
                    [isRunning]="isRunning"
                    (startTimerEvent)="startTimer($event)"
                    (stopTimerEvent)="stopTimer($event)"></app-timer-control>
 
+<app-timer-control-manual *ngIf="!isAutomaticMode"
+                  [timeTracker]="currentTimeTracker"
+                  [projects]="projects?.projects"
+                   [isLoading]="isLoading"
+                   (startTimerEvent)="startTimer($event)"
+                   (stopTimerEvent)="stopTimer($event)"></app-timer-control-manual>
+
 <section>
+  <mat-spinner *ngIf="isTimeLogsLoading"></mat-spinner>
   <app-time-logs *ngIf="!isTimeLogsLoading"
                  [timeLogs]="timeLogs.records"
-                 (deleteTimeLogEvent)="getTimlogDeleteEvent($event)"></app-time-logs>
+                 (deleteTimeLogEvent)="getTimlogDeleteEvent($event)"
+                 [timeLogs]="timeLogs?.records"
+                 [timeBookings]="timeBookings?.records"
+                 [projects]="projects?.projects">
+  </app-time-logs>
 </section>

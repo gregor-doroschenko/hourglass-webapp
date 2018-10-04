@@ -1,16 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { GroupedTimeLogs, TimeTracker } from '../../../services/timer/timer.interface';
+import { GroupedTimeLogs, TimeTracker, TimeBooking } from '../../../services/timer/timer.interface';
 import { TimelogDeleteDialogComponent } from './timelog-delete-dialog/timelog-delete-dialog.component';
+import { Projects, Project } from '../../../services/redmine/redmine.interface';
 
 @Component({
   selector: 'app-time-logs',
   templateUrl: './time-logs.component.html',
   styleUrls: ['./time-logs.component.scss']
 })
-export class TimeLogsComponent implements OnInit {
+export class TimeLogsComponent implements OnInit, OnChanges {
 
   @Input() timeLogs: TimeTracker[];
+  @Input() timeBookings: TimeBooking[];
+  @Input() projects: Project[];
 
   @Output() deleteTimeLogEvent: EventEmitter<number> = new EventEmitter<number>();
 
@@ -64,6 +67,10 @@ export class TimeLogsComponent implements OnInit {
     });
   }
 
+  ngOnChanges() {
+    this.assignProject();
+  }
+
   sortByDate() {
     this.timeLogs.sort((a, b) => {
       return new Date(b.start).getTime() - new Date(a.start).getTime();
@@ -101,4 +108,14 @@ export class TimeLogsComponent implements OnInit {
     }
   }
 
+  assignProject() {
+    if (this.timeBookings && this.projects) {
+      for (const item of this.timeLogs) {
+        const booking = this.timeBookings.find(x => x.time_log_id === item.id);
+        if (booking) {
+          item.project = this.projects.find(x => x.id === booking.time_entry.project_id);
+        }
+      }
+    }
+  }
 }
