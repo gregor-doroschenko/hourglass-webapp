@@ -43,8 +43,7 @@
   <mat-checkbox [(ngModel)]="timeTracker.billable"
                 name="billable">Billable</mat-checkbox>
   <div>
-    <button *ngIf="!isRunning"
-            mat-raised-button
+    <button mat-raised-button
             color="primary"
             type="submit"
             [disabled]="isLoading"
