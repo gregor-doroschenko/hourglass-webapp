@@ -12,9 +12,13 @@
   <mat-card *ngIf="group.time_logs.length !== 0">
     <mat-card-header>
       <mat-card-title>
-        <div>
-          <strong>{{ group.int_date === today ? 'Today' : group.int_date | date:'E, dd.MM.yyyy' }}</strong>
-          <strong>{{ group.time_sum ? (group.time_sum | date:'HH:mm:ss') : null }}</strong>
+        <div class="flex-cols">
+          <div class="flex-col">
+            <strong>{{ group.int_date === today ? 'Today' : group.int_date | date:'E, dd.MM.yyyy' }}</strong>
+          </div>
+          <div class="flex-col">
+            <strong>{{ group.time_sum ? (group.time_sum | date:'HH:mm:ss') : null }}</strong>
+          </div>
         </div>
       </mat-card-title>
     </mat-card-header>
@@ -23,7 +27,7 @@
         <mat-list-item>
           <div class="time-log-details">
             <p>{{ timeLog.comments }}</p>
-            <p [style.color]="timeLog?.project?.color">{{timeLog?.project?.name}}</p>
+            <p [style.color]="timeLog?.project?.color"> {{timeLog?.project?.name}}</p>
             <p>{{ timeLog.start | date:'HH:mm:ss' }} - {{ timeLog.stop | date:'HH:mm:ss' }}</p>
             <p>{{ timeLog.diff_time | date:'HH:mm:ss' }}</p>
             <button mat-icon-button

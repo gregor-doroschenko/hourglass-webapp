@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Project } from '../../../services/redmine/redmine.interface';
 import { GroupedTimeLogs, TimeBooking, TimeTracker } from '../../../services/timer/timer.interface';
@@ -7,8 +7,7 @@ import { TimelogDeleteDialogComponent } from './timelog-delete-dialog/timelog-de
 @Component({
   selector: 'app-time-logs',
   templateUrl: './time-logs.component.html',
-  styleUrls: ['./time-logs.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./time-logs.component.scss']
 })
 export class TimeLogsComponent implements OnInit, OnChanges {
 
