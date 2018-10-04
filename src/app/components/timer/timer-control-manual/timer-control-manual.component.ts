@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../../../services/redmine/redmine.interface';
-import { TimeTracker, TimeEntry } from '../../../services/timer/timer.interface';
-import { TimerService } from '../../../services/timer/timer.service';
-import { RedmineService } from '../../../services/redmine/redmine.service';
+import { TimeTracker } from '../../../services/timer/timer.interface';
 
 @Component({
   selector: 'app-timer-control-manual',
@@ -13,15 +11,16 @@ export class TimerControlManualComponent implements OnInit {
 
   @Input() projects: Project[];
   @Input() timeTracker: Partial<TimeTracker> = {};
+  @Input() userId: number;
   @Input() isLoading = false;
 
-  model: TimeEntry;
+  @Output() addManualTimeEntryEvent: EventEmitter<Partial<TimeTracker>[]> = new EventEmitter<Partial<TimeTracker>[]>();
 
   inputDate: Date;
   inputStart: string;
   inputEnd: string;
 
-  constructor(private dataService: RedmineService) { }
+  constructor() { }
 
   ngOnInit() {
     this.inputDate = new Date();
@@ -29,19 +28,27 @@ export class TimerControlManualComponent implements OnInit {
         ':' + this.inputDate.getMinutes().toString().padStart(2, '0');
     this.inputEnd = this.inputDate.getHours().toString().padStart(2, '0') +
         ':' + (this.inputDate.getMinutes() + 1).toString().padStart(2, '0');
+    this.timeTracker.billable = true;
   }
 
-  onSubmit() {
+  add() {
     const startTime = this.inputStart.split(':');
     const endTime = this.inputEnd.split(':');
-    const start = new Date(this.inputDate).setHours(+startTime[0], +startTime[1]);
-    const stop = new Date(this.inputDate).setHours(+endTime[0], +endTime[1]);
+    const start = new Date(this.inputDate).setHours(+startTime[0], +startTime[1], 0, 0);
+    const stop = new Date(this.inputDate).setHours(+endTime[0], +endTime[1], 0, 0);
 
-    const diff = stop - start;
+    const newTimelog: Partial<TimeTracker>[] = [{
+      start: new Date(start).toISOString(),
+      stop: new Date(stop).toISOString(),
+      user_id: this.userId,
+      project_id: this.timeTracker.project_id ? this.timeTracker.project_id : null,
+      issue_id: this.timeTracker.issue_id ? this.timeTracker.issue_id : null,
+      comments: this.timeTracker.comments ? this.timeTracker.comments : null,
+      activity_id: this.timeTracker.billable ? 13 : 14
+    }];
 
-    // TODO: Post/Put Timebooking
-    this.dataService.postTimeTracker(this.model).subscribe(data => {
-
-    });
+    this.addManualTimeEntryEvent.emit(newTimelog);
+    this.timeTracker = {};
+    this.ngOnInit();
   }
 }

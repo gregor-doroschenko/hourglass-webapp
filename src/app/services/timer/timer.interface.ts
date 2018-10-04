@@ -17,6 +17,7 @@ export interface TimeTracker {
   comments: string;
   hours: number;
   diff_time: number;
+  billable: boolean;
 
   project: Project;
 }
@@ -63,6 +64,20 @@ export interface TimeEntry {
 }
 
 export interface GroupedTimeLogs {
+  time_sum: number;
   int_date: number;
   time_logs: TimeTracker[];
+}
+
+export interface TimeLogsObject {
+  time_logs: Partial<TimeTracker>[];
+}
+
+export interface TimeBookingsObject {
+  time_bookings: Partial<TimeTracker>[];
+}
+
+export interface ResponseTimeLogsObject {
+  success: Partial<TimeTracker>[];
+  error: any;
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { Projects } from '../../services/redmine/redmine.interface';
+import { RedmineService } from '../../services/redmine/redmine.service';
 import { TimeBookings, TimeTracker, TimeTrackers } from '../../services/timer/timer.interface';
 import { TimerService } from '../../services/timer/timer.service';
 import { UserService } from '../../services/user/user.service';
-import { RedmineService } from '../../services/redmine/redmine.service';
-import { Projects } from '../../services/redmine/redmine.interface';
-import { Observable } from 'rxjs/internal/Observable';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
-  styleUrls: ['./timer.component.scss']
+  styleUrls: ['./timer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TimerComponent implements OnInit {
 
@@ -118,6 +119,24 @@ export class TimerComponent implements OnInit {
   getTimlogDeleteEvent(timeLogId: number) {
     this.timerService.deleteTimeLog(timeLogId).subscribe(result => {
       console.log('time entry deleted');
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getAddManualTimeEntryEvent(newTimeLogs: Partial<TimeTracker>[]) {
+    this.timerService.createTimeLogs(newTimeLogs).subscribe(result => {
+      if (result) {
+        this.bookManualTimeEntry(result.success[0].id, newTimeLogs[0]);
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  bookManualTimeEntry(id: number, timeLog: Partial<TimeTracker>) {
+    this.timerService.bookTimeLog(id, timeLog).subscribe(result => {
+      this.loadData();
     }, error => {
       console.log(error);
     });

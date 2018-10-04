@@ -5,17 +5,24 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Test</p>
+    <p>Cooming soon</p>
   </mat-card-content>
 </mat-card>
-<mat-card *ngFor="let group of groupedTimeLogs;">
-  <mat-card-header>
-    <mat-card-title>
-      <strong>{{ group.int_date === today ? 'Today' : group.int_date | date:'E, dd.MM.yyyy' }}</strong>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ng-container *ngIf="group.time_logs.length !== 0; else noTimeLogs;">
+<ng-container *ngFor="let group of groupedTimeLogs;">
+  <mat-card *ngIf="group.time_logs.length !== 0">
+    <mat-card-header>
+      <mat-card-title>
+        <div class="flex-cols">
+          <div class="flex-col">
+            <strong>{{ group.int_date === today ? 'Today' : group.int_date | date:'E, dd.MM.yyyy' }}</strong>
+          </div>
+          <div class="flex-col">
+            <strong>{{ group.time_sum ? (group.time_sum | date:'HH:mm:ss') : null }}</strong>
+          </div>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
       <ng-container *ngFor="let timeLog of group.time_logs; let i = index;">
         <mat-list-item>
           <div class="time-log-details">
@@ -31,9 +38,6 @@
         </mat-list-item>
         <mat-divider *ngIf="!(i + 1 === group.time_logs.length)"></mat-divider>
       </ng-container>
-    </ng-container>
-  </mat-card-content>
-</mat-card>
-<ng-template #noTimeLogs>
-  <p>There are no entries for this day.</p>
-</ng-template>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

@@ -1,39 +1,35 @@
-<mat-card>
-  <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput
-               [disabled]="isLoading"
-               placeholder="Task description"
-               [(ngModel)]="timeTracker.comments"
-               name="comments">
-      </mat-form-field>
-      <mat-form-field>
-          <mat-select placeholder="Select project" [(value)]="timeTracker.project_id">
-            <mat-option *ngFor="let proj of projects" [value]="proj.id">
-              <span class="outline-text" [style.color]="proj?.color">{{proj.name}}</span>
-            </mat-option>
-          </mat-select>
-      </mat-form-field>
-      <div class="current-time">
+<form>
+  <mat-form-field>
+    <input matInput
+           [disabled]="isLoading"
+           placeholder="Task description"
+           [(ngModel)]="timeTracker.comments"
+           name="comments">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Select project" [(value)]="timeTracker.project_id">
+      <mat-option *ngFor="let proj of projects" [value]="proj.id">
+        <span class="outline-text" [style.color]="proj?.color">{{proj.name}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="current-time">
       <span>
         {{ currentTime$ | async | date:'HH:mm:ss' }}
       </span>
-      </div>
-      <div>
-        <button *ngIf="!isRunning"
-                mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="isLoading"
-                (click)="start()">Start</button>
-        <button *ngIf="isRunning"
-                mat-raised-button
-                color="warn"
-                type="submit"
-                [disabled]="isLoading"
-                (click)="stop()">Stop</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+  <div>
+    <button *ngIf="!isRunning"
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="isLoading"
+            (click)="start()">Start</button>
+    <button *ngIf="isRunning"
+            mat-raised-button
+            color="warn"
+            type="submit"
+            [disabled]="isLoading"
+            (click)="stop()">Stop</button>
+  </div>
+</form>

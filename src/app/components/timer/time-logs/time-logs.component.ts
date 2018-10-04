@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { GroupedTimeLogs, TimeTracker, TimeBooking } from '../../../services/timer/timer.interface';
+import { Project } from '../../../services/redmine/redmine.interface';
+import { GroupedTimeLogs, TimeBooking, TimeTracker } from '../../../services/timer/timer.interface';
 import { TimelogDeleteDialogComponent } from './timelog-delete-dialog/timelog-delete-dialog.component';
-import { Projects, Project } from '../../../services/redmine/redmine.interface';
 
 @Component({
   selector: 'app-time-logs',
@@ -33,6 +33,10 @@ export class TimeLogsComponent implements OnInit, OnChanges {
     this.groupTimeLogsByDate();
   }
 
+  ngOnChanges() {
+    this.assignProject();
+  }
+
   getDaysForLastTwoWeeks(): number[] {
     const now = Date.now();
     const currentDate = new Date(now).getDate();
@@ -51,6 +55,7 @@ export class TimeLogsComponent implements OnInit, OnChanges {
     const lastTwoWeeksDays = this.getDaysForLastTwoWeeks();
     lastTwoWeeksDays.forEach((day, index) => {
       const group: GroupedTimeLogs = {
+        time_sum: 0,
         int_date: day,
         time_logs: []
       };
@@ -61,14 +66,24 @@ export class TimeLogsComponent implements OnInit, OnChanges {
         }
       });
       if (timeLogs.length !== 0) {
+        group.time_sum = this.getDayTimeSum(timeLogs);
         group.time_logs = timeLogs;
       }
       this.groupedTimeLogs[index] = group;
     });
   }
 
-  ngOnChanges() {
-    this.assignProject();
+  getDayTimeSum(timeLogs: TimeTracker[]): number {
+    const emptyTime = new Date(0, 0, 0, 0, 0, 0, 0);
+    timeLogs.forEach(timeLog => {
+      const timeLogTime = new Date(timeLog.diff_time);
+      emptyTime.setHours(
+        emptyTime.getHours() + timeLogTime.getHours(),
+        emptyTime.getMinutes() + timeLogTime.getMinutes(),
+        emptyTime.getSeconds() + timeLogTime.getSeconds(),
+        0);
+    });
+    return emptyTime.getTime();
   }
 
   sortByDate() {

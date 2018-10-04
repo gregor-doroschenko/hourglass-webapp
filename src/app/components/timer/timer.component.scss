@@ -5,14 +5,30 @@ section {
   margin-top: 2rem;
 }
 
-.mat-card-title {
-  margin-bottom: 5px
-}
+mat-card {
+  margin-bottom: 2rem;
 
-.mat-slide-toggle {
-  right: 15px;
-  bottom: 10px;
-  position: absolute;
+  mat-card-header {
+
+    .mat-card-header-text {
+      width: 100%;
+
+      mat-card-title {
+        .flex-cols {
+          display: flex;
+          justify-content: space-between;
+
+          .flex-col {
+            flex: 1;
+
+            &:last-child {
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .mat-spinner {
