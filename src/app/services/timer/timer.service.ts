@@ -3,7 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { BasedataService } from '../shared/basedata.service';
-import { TimeBookings, TimeLogsObject, TimeTracker, TimeTrackerObject, TimeTrackers } from './timer.interface';
+import {
+  ResponseTimeLogsObject,
+  TimeBookings,
+  TimeBookingsObject,
+  TimeLogsObject,
+  TimeTracker,
+  TimeTrackerObject,
+  TimeTrackers
+} from './timer.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +23,7 @@ export class TimerService extends BasedataService {
   private timeLogsUrl = '/hourglass/time_logs';
   private timeBookingsUrl = '/hourglass/time_bookings';
   private timeLogsBulkCreate = '/bulk_create';
+  private timeLogsBulkBook = '/bulk_book';
 
   constructor(protected authenticationService: AuthenticationService,
               private http: HttpClient) {
@@ -58,10 +67,27 @@ export class TimerService extends BasedataService {
     return this.http.get<TimeBookings>(endpoint);
   }
 
-  createTimeLogs(timeLogs: Partial<TimeTracker>[]): Observable<TimeTracker> {
+  createTimeLogs(timeLogs: Partial<TimeTracker>[]): Observable<ResponseTimeLogsObject> {
     const endpoint = this.getFullEndpointUrl(this.timeLogsUrl + this.timeLogsBulkCreate);
     const saveObject: TimeLogsObject = {
       time_logs: timeLogs
+    };
+    return this.http.post<ResponseTimeLogsObject>(endpoint, JSON.stringify(saveObject));
+  }
+
+  bookTimeLog(timeLogId: number, timeLog: Partial<TimeTracker>): Observable<TimeTracker> {
+    const endpoint = this.getFullEndpointUrl(this.timeLogsUrl + '/' + timeLogId + '/book');
+    timeLog.id = timeLogId;
+    const saveObject = {
+      time_booking: timeLog
+    };
+    return this.http.post<TimeTracker>(endpoint, JSON.stringify(saveObject));
+  }
+
+  bookTimeLogs(timeLogs: Partial<TimeTracker>[]): Observable<TimeTracker> {
+    const endpoint = this.getFullEndpointUrl(this.timeLogsUrl + this.timeLogsBulkCreate);
+    const saveObject: TimeBookingsObject = {
+      time_bookings: timeLogs
     };
     return this.http.post<TimeTracker>(endpoint, JSON.stringify(saveObject));
   }
