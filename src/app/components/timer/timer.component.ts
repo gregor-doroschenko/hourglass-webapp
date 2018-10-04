@@ -4,6 +4,8 @@ import { TimerService } from '../../services/timer/timer.service';
 import { UserService } from '../../services/user/user.service';
 import { RedmineService } from '../../services/redmine/redmine.service';
 import { Projects } from '../../services/redmine/redmine.interface';
+import { Observable } from 'rxjs/internal/Observable';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
@@ -24,6 +26,7 @@ export class TimerComponent implements OnInit {
   isTimeLogsLoading: boolean;
   isTimeBookingsLoading: boolean;
   isProjectsLoading: boolean;
+  isAutomaticMode = true;
 
   constructor(private timerService: TimerService,
               private redmineService: RedmineService,
@@ -32,9 +35,7 @@ export class TimerComponent implements OnInit {
   ngOnInit() {
     this.userId = this.userService.getUserId();
     this.getCurrentTimer();
-    this.getTimeLogs();
-    this.getTimeBookings();
-    this.getProjects();
+    this.loadData();
   }
 
   startTimer(timeTracker: Partial<TimeTracker>) {
@@ -54,7 +55,7 @@ export class TimerComponent implements OnInit {
     this.timerService.stopTimeTracker(timerId).subscribe(result => {
       this.isRunning = false;
       this.isLoading = false;
-      this.getTimeLogs();
+      this.loadData();
     }, error => {
       this.isLoading = false;
       console.log(error);
@@ -76,50 +77,42 @@ export class TimerComponent implements OnInit {
     });
   }
 
-  getTimeLogs() {
-    this.isTimeLogsLoading = true;
-    this.timerService.getTimeLogs().subscribe(timeLogs => {
-      this.timeLogs = timeLogs;
-      this.isTimeLogsLoading = false;
-    }, error => {
-      console.log(error);
-      this.isTimeLogsLoading = false;
-    });
-  }
-
-  getTimeBookings() {
-    this.isTimeBookingsLoading = true;
-    this.timerService.getTimeBookings().subscribe(timeBookings => {
-      this.timeBookings = timeBookings;
-      this.isTimeBookingsLoading = false;
-    }, error => {
-      console.log(error);
-      this.isTimeBookingsLoading = false;
-    });
-  }
-
-  getProjects() {
-    this.isProjectsLoading = true;
-    this.redmineService.getProjects().subscribe(projects => {
-      this.projects = projects;
-      this.isProjectsLoading = false;
-      this.projects.projects.forEach(x => x.color = this.getRandomColor(x.name));
-    }, error => {
-      console.log(error);
-      this.isProjectsLoading = false;
-    });
-  }
-
   private getRandomColor (projectName: string) {
     projectName = projectName.replace(/[^a-f0-9]/gi, '');
-    projectName = projectName.padStart(6, '999').slice(-6);
+    projectName = projectName.padStart(6, '000').slice(-6);
     return '#' + projectName.toUpperCase();
-   /*  const letters = '456789ABC';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 9)];
-    }
-    return color; */
+  }
+
+  loadData() {
+    this.isLoading = true;
+    this.isTimeLogsLoading = true;
+    this.isTimeBookingsLoading = true;
+    this.isProjectsLoading = true;
+
+    const calls: Observable<any>[] = [];
+
+    calls.push(this.timerService.getTimeLogs());
+    calls.push(this.timerService.getTimeBookings());
+    calls.push(this.redmineService.getProjects());
+
+    forkJoin(calls).subscribe((data) => {
+      this.timeLogs = data[0];
+      this.timeBookings = data[1];
+      this.projects = data[2];
+
+      this.projects.projects.forEach(x => x.color = this.getRandomColor(x.name));
+
+      this.isTimeLogsLoading = false;
+      this.isTimeBookingsLoading = false;
+      this.isProjectsLoading = false;
+      this.isLoading = false;
+    }, error => {
+      console.log(error);
+      this.isTimeLogsLoading = false;
+      this.isTimeBookingsLoading = false;
+      this.isProjectsLoading = false;
+      this.isLoading = false;
+    });
   }
 
 }

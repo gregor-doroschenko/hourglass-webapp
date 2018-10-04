@@ -10,7 +10,13 @@ import {
   MatToolbarModule,
   MatSelect,
   MatSelectModule,
-  MatOptionModule
+  MatOptionModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSpinner,
+  MatProgressSpinnerModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
@@ -34,6 +40,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
 import { TimeLogsComponent } from './components/timer/time-logs/time-logs.component';
 import { RedmineService } from './services/redmine/redmine.service';
+import { TimerControlManualComponent } from './components/timer/timer-control-manual/timer-control-manual.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +51,8 @@ import { RedmineService } from './services/redmine/redmine.service';
     TimerComponent,
     DashboardComponent,
     TimerControlComponent,
-    TimeLogsComponent
+    TimeLogsComponent,
+    TimerControlManualComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +71,12 @@ import { RedmineService } from './services/redmine/redmine.service';
     MatListModule,
     MatDividerModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthenticationService,

@@ -51,4 +51,12 @@ export class TimerService extends BasedataService {
     const endpoint = this.getFullEndpointUrl(this.timeBookingsUrl);
     return this.http.get<TimeBookings>(endpoint);
   }
+
+  postTimeTracker(timeTracker: Partial<TimeTracker>): Observable<TimeTracker> {
+    const endpoint = this.getFullEndpointUrl(this.timeLogsUrl);
+    const body: TimeTrackerObject = {
+      time_tracker: timeTracker
+    };
+    return this.http.post<TimeTracker>(endpoint, JSON.stringify(body));
+  }
 }
