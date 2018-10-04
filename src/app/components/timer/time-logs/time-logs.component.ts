@@ -52,7 +52,7 @@ export class TimeLogsComponent implements OnInit {
         time_logs: []
       };
       const timeLogs = this.timeLogs.filter(timelog => {
-        const timelogDate = new Date(timelog.created_at).setHours(0, 0, 0, 0);
+        const timelogDate = new Date(timelog.start).setHours(0, 0, 0, 0);
         if (new Date(timelogDate).getTime() === new Date(day).getTime()) {
           return timelog;
         }
@@ -66,7 +66,7 @@ export class TimeLogsComponent implements OnInit {
 
   sortByDate() {
     this.timeLogs.sort((a, b) => {
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      return new Date(b.start).getTime() - new Date(a.start).getTime();
     });
   }
 
