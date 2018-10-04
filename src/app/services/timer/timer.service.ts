@@ -10,10 +10,10 @@ import { TimeBookings, TimeTracker, TimeTrackerObject, TimeTrackers } from './ti
 })
 export class TimerService extends BasedataService {
 
-  private timeTrackersUrl: string = '/hourglass/time_trackers';
-  private startTimeTrackerUrl: string = '/hourglass/time_trackers/start';
-  private timeLogsUrl: string = '/hourglass/time_logs';
-  private timeBookingsUrl: string = '/hourglass/time_bookings';
+  private timeTrackersUrl = '/hourglass/time_trackers';
+  private startTimeTrackerUrl = '/hourglass/time_trackers/start';
+  private timeLogsUrl = '/hourglass/time_logs';
+  private timeBookingsUrl = '/hourglass/time_bookings';
 
   constructor(protected authenticationService: AuthenticationService,
               private http: HttpClient) {

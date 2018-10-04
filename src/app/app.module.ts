@@ -7,7 +7,16 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSelect,
+  MatSelectModule,
+  MatOptionModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSpinner,
+  MatProgressSpinnerModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +40,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TimerControlComponent } from './components/timer/timer-control/timer-control.component';
 import { TimeLogsComponent } from './components/timer/time-logs/time-logs.component';
 import { TimelogDeleteDialogComponent } from './components/timer/time-logs/timelog-delete-dialog/timelog-delete-dialog.component';
+import { TimerControlManualComponent } from './components/timer/timer-control-manual/timer-control-manual.component';
+import { RedmineService } from './services/redmine/redmine.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +53,8 @@ import { TimelogDeleteDialogComponent } from './components/timer/time-logs/timel
     DashboardComponent,
     TimerControlComponent,
     TimeLogsComponent,
-    TimelogDeleteDialogComponent
+    TimelogDeleteDialogComponent,
+    TimerControlManualComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +72,14 @@ import { TimelogDeleteDialogComponent } from './components/timer/time-logs/timel
     MatIconModule,
     MatListModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatOptionModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthenticationService,
@@ -73,6 +92,7 @@ import { TimelogDeleteDialogComponent } from './components/timer/time-logs/timel
     BasedataService,
     UserService,
     TimerService,
+    RedmineService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
