@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../../../services/redmine/redmine.interface';
 import { TimeTracker, TimeEntry } from '../../../services/timer/timer.interface';
-import { TimerService } from '../../../services/timer/timer.service';
 import { RedmineService } from '../../../services/redmine/redmine.service';
 
 @Component({
@@ -14,6 +13,8 @@ export class TimerControlManualComponent implements OnInit {
   @Input() projects: Project[];
   @Input() timeTracker: Partial<TimeTracker> = {};
   @Input() isLoading = false;
+
+  @Output() addManualTimeEntryEvent: EventEmitter<any> = new EventEmitter<any>();
 
   model: TimeEntry;
 
@@ -31,7 +32,7 @@ export class TimerControlManualComponent implements OnInit {
         ':' + (this.inputDate.getMinutes() + 1).toString().padStart(2, '0');
   }
 
-  onSubmit() {
+  add() {
     const startTime = this.inputStart.split(':');
     const endTime = this.inputEnd.split(':');
     const start = new Date(this.inputDate).setHours(+startTime[0], +startTime[1]);

@@ -7,22 +7,38 @@
            name="comments">
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="Select project" [(value)]="timeTracker.project_id">
-      <mat-option *ngFor="let proj of projects" [value]="proj.id">
-        <span class="outline-text" [style.color]="proj?.color">{{proj.name}}</span>
+    <mat-select placeholder="Select project"
+                [(value)]="timeTracker.project_id">
+      <mat-option *ngFor="let proj of projects"
+                  [value]="proj.id">
+        <span class="outline-text"
+              [style.color]="proj?.color">{{ proj.name }}</span>
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="inputDate" name="date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <input matInput
+           [matDatepicker]="picker"
+           placeholder="Choose a date"
+           [(ngModel)]="inputDate"
+           name="date">
+    <mat-datepicker-toggle matSuffix
+                           [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
-    <input type="time" matInput placeholder="Start" [(ngModel)]="inputStart" name="start">
+    <input type="time"
+           matInput
+           placeholder="Start"
+           [(ngModel)]="inputStart"
+           name="start">
   </mat-form-field>
   <mat-form-field>
-    <input type="time" matInput placeholder="End" [(ngModel)]="inputEnd" name="end">
+    <input type="time"
+           matInput
+           placeholder="End"
+           [(ngModel)]="inputEnd"
+           name="end">
   </mat-form-field>
   <div>
     <button *ngIf="!isRunning"
@@ -30,7 +46,6 @@
             color="primary"
             type="submit"
             [disabled]="isLoading"
-            (click)="onSubmit()">Save
-    </button>
+            (click)="add()">Add</button>
   </div>
 </form>
