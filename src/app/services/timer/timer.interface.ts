@@ -63,6 +63,7 @@ export interface TimeEntry {
 }
 
 export interface GroupedTimeLogs {
+  time_sum: number;
   int_date: number;
   time_logs: TimeTracker[];
 }

@@ -1,5 +1,27 @@
 mat-card {
   margin-bottom: 2rem;
+
+  mat-card-header {
+
+    .mat-card-header-text {
+      width: 100%;
+
+      mat-card-title {
+        div {
+          display: flex;
+          justify-content: space-between;
+
+          strong {
+            flex: 1;
+
+            &:last-child {
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .time-log-details {
