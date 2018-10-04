@@ -14,7 +14,7 @@ export class TimerControlManualComponent implements OnInit {
   @Input() userId: number;
   @Input() isLoading = false;
 
-  @Output() addManualTimeEntryEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addManualTimeEntryEvent: EventEmitter<Partial<TimeTracker>[]> = new EventEmitter<Partial<TimeTracker>[]>();
 
   inputDate: Date;
   inputStart: string;
@@ -28,6 +28,7 @@ export class TimerControlManualComponent implements OnInit {
         ':' + this.inputDate.getMinutes().toString().padStart(2, '0');
     this.inputEnd = this.inputDate.getHours().toString().padStart(2, '0') +
         ':' + (this.inputDate.getMinutes() + 1).toString().padStart(2, '0');
+    this.timeTracker.billable = true;
   }
 
   add() {
@@ -37,15 +38,15 @@ export class TimerControlManualComponent implements OnInit {
     const stop = new Date(this.inputDate).setHours(+endTime[0], +endTime[1], 0, 0);
 
     const newTimelog: Partial<TimeTracker>[] = [{
-      start: new Date(start).toString(),
-      stop: new Date(stop).toString(),
+      start: new Date(start).toISOString(),
+      stop: new Date(stop).toISOString(),
       user_id: this.userId,
       project_id: this.timeTracker.project_id ? this.timeTracker.project_id : null,
       issue_id: this.timeTracker.issue_id ? this.timeTracker.issue_id : null,
-      comments: this.timeTracker.comments ? this.timeTracker.comments : null
+      comments: this.timeTracker.comments ? this.timeTracker.comments : null,
+      activity_id: this.timeTracker.billable ? 13 : 14
     }];
 
-    console.log(newTimelog);
     this.addManualTimeEntryEvent.emit(newTimelog);
     this.timeTracker = {};
     this.ngOnInit();

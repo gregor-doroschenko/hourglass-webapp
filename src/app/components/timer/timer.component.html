@@ -36,7 +36,6 @@
 <section>
   <mat-spinner *ngIf="isTimeLogsLoading"></mat-spinner>
   <app-time-logs *ngIf="!isTimeLogsLoading"
-                 [timeLogs]="timeLogs.records"
                  (deleteTimeLogEvent)="getTimlogDeleteEvent($event)"
                  [timeLogs]="timeLogs?.records"
                  [timeBookings]="timeBookings?.records"
