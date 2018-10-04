@@ -67,3 +67,7 @@ export interface GroupedTimeLogs {
   int_date: number;
   time_logs: TimeTracker[];
 }
+
+export interface TimeLogsObject {
+  time_logs: Partial<TimeTracker>[];
+}
