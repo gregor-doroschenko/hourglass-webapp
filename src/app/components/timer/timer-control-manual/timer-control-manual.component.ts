@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../../../services/redmine/redmine.interface';
-import { TimeTracker, TimeEntry } from '../../../services/timer/timer.interface';
-import { RedmineService } from '../../../services/redmine/redmine.service';
+import { TimeTracker } from '../../../services/timer/timer.interface';
 
 @Component({
   selector: 'app-timer-control-manual',
@@ -12,17 +11,16 @@ export class TimerControlManualComponent implements OnInit {
 
   @Input() projects: Project[];
   @Input() timeTracker: Partial<TimeTracker> = {};
+  @Input() userId: number;
   @Input() isLoading = false;
 
   @Output() addManualTimeEntryEvent: EventEmitter<any> = new EventEmitter<any>();
-
-  model: TimeEntry;
 
   inputDate: Date;
   inputStart: string;
   inputEnd: string;
 
-  constructor(private dataService: RedmineService) { }
+  constructor() { }
 
   ngOnInit() {
     this.inputDate = new Date();
@@ -35,14 +33,21 @@ export class TimerControlManualComponent implements OnInit {
   add() {
     const startTime = this.inputStart.split(':');
     const endTime = this.inputEnd.split(':');
-    const start = new Date(this.inputDate).setHours(+startTime[0], +startTime[1]);
-    const stop = new Date(this.inputDate).setHours(+endTime[0], +endTime[1]);
+    const start = new Date(this.inputDate).setHours(+startTime[0], +startTime[1], 0, 0);
+    const stop = new Date(this.inputDate).setHours(+endTime[0], +endTime[1], 0, 0);
 
-    const diff = stop - start;
+    const newTimelog: Partial<TimeTracker>[] = [{
+      start: new Date(start).toString(),
+      stop: new Date(stop).toString(),
+      user_id: this.userId,
+      project_id: this.timeTracker.project_id ? this.timeTracker.project_id : null,
+      issue_id: this.timeTracker.issue_id ? this.timeTracker.issue_id : null,
+      comments: this.timeTracker.comments ? this.timeTracker.comments : null
+    }];
 
-    // TODO: Post/Put Timebooking
-    this.dataService.postTimeTracker(this.model).subscribe(data => {
-
-    });
+    console.log(newTimelog);
+    this.addManualTimeEntryEvent.emit(newTimelog);
+    this.timeTracker = {};
+    this.ngOnInit();
   }
 }

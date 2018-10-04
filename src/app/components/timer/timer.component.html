@@ -27,9 +27,9 @@
     <app-timer-control-manual *ngIf="!isAutomaticMode"
                               [timeTracker]="currentTimeTracker"
                               [projects]="projects?.projects"
+                              [userId]="userId"
                               [isLoading]="isLoading"
-                              (startTimerEvent)="startTimer($event)"
-                              (stopTimerEvent)="stopTimer($event)"></app-timer-control-manual>
+                              (addManualTimeEntryEvent)="getAddManualTimeEntryEvent($event)"></app-timer-control-manual>
   </mat-card-content>
 </mat-card>
 

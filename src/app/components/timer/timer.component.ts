@@ -124,4 +124,13 @@ export class TimerComponent implements OnInit {
     });
   }
 
+  getAddManualTimeEntryEvent(newTimeLogs: Partial<TimeTracker>[]) {
+    this.timerService.createTimeLogs(newTimeLogs).subscribe(result => {
+      console.log(result);
+      this.loadData();
+    }, error => {
+      console.log(error);
+    });
+  }
+
 }
